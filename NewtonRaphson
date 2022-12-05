@@ -1,0 +1,39 @@
+import numpy as np #Feito por Fabricio Rocha Lopes
+from sympy import *
+import matplotlib.pyplot as plt
+
+class trabalhoAnaliseNumerica:
+    def __init__(self):
+        self.x = symbols('x')
+        self.k = float(29.4614)
+        self.f = ((self.x + 1)**49) * self.k - ((self.x + 1)**48) * (self.k + 1) + 1 #Definindo a função a ser tratada
+        self.funcao = lambda x : ((x + 1)**49) * self.k - ((x + 1)**48) * (self.k + 1) + 1
+        
+        
+        
+    def metodoNewtonRaphson(self, f, x, k):  
+
+        fderivada = f.diff(x) #Calculando a derivada da função definida acima
+
+        print(fderivada)
+        print(fderivada.evalf(subs={x: 0}))
+
+
+        xplt = [] #Lista para armazenar os valores de x
+        yplt = [] #Lista para armazenar os valores de y
+        xn = 1 #Valor inicial de x
+        for i in range(100): #Loop para calcular os valores de x e y
+            xn = xn - np.float(f.evalf(subs= {x:xn})) / np.float(fderivada.evalf(subs= {x:xn})) #Calculando o valor de x
+            print(f'A {i+1} iteração xn é {xn:.4} e f(xn) é {np.float(f.evalf(subs= {x:xn})):.4}') #Imprimindo os valores de x e y
+            xplt.append(xn) #Adicionando o valor de x na lista xplt
+            yplt.append(float(f.evalf(subs= {x:xn}))) #Adicionando o valor de y na lista yplt
+            
+        plt.plot(xplt,yplt) #Plotando os valores de x e y
+        plt.xlabel('Xn') #Definindo o nome do eixo x
+        plt.ylabel('f(Xn)') #Definindo o nome do eixo y
+        plt.show()  #Mostrando o gráfico
+
+        
+calculo = trabalhoAnaliseNumerica()
+           
+    
